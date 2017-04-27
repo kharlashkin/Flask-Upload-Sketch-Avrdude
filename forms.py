@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import SelectField
+import glob
 
+ports = glob.glob('/dev/tty[A-Za-z]*')
 
 class Avrdude(FlaskForm):
     partno = SelectField('partno', choices=[('m328', 'ATmega328'),
@@ -23,3 +26,5 @@ class Avrdude(FlaskForm):
                                                     ('arduino', 'Arduino'),
                                                     ('usbtiny', 'USBtiny simple USB programmer'),
                                                     ('usbasp', 'USBasp')])
+    sketch = FileField(validators=[FileRequired('No selected file'), FileAllowed(['hex'], 'Incorrect file format')])
+    port = SelectField('port', choices=[(i, i) for i in ports])
