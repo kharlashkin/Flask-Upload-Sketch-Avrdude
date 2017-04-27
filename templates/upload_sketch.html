@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Загрузка скетча в Arduino</h1>
+<br>
+<form method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {{ form.sketch }}
+    <br>
+    <strong>Микроконтроллер</strong>
+    {{ form.partno }}
+    <strong>Порт</strong>
+    {{ form.port }}
+    <strong>Скорость</strong>
+    {{ form.baudrate }}
+    <strong>Программатор</strong>
+    {{ form.programmer }}
+    <input type="submit" value="Загрузка">
+</form>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+        <i>
+        <br>
+        {{ message }}
+        </i>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+{% endblock %}
